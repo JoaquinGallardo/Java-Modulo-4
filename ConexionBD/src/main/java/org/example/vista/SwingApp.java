@@ -77,15 +77,45 @@ eliminarButton.addActionListener(e -> eliminarEmpleado());
                             "Email: ", email,
                             "Salario: ", salario
                     };
-                    int resultado = JOptionPane.showConfirmDialog(this, campos, "Agregar empleado", JOptionPane.OK_CANCEL_OPTION);
-
+                    int confirmarResultado = JOptionPane.showConfirmDialog(this, campos, "Actualizar empleado", JOptionPane.OK_CANCEL_OPTION);
+                    if(confirmarResultado==JOptionPane.OK_OPTION){
+                        empleado.setNombre(nombre.getText());
+                        empleado.setPrimerApellido(primerApellido.getText());
+                        empleado.setSegundoApellido(segundoApellido.getText());
+                        empleado.setEmail(email.getText());
+                        empleado.setSalario(Float.parseFloat(salario.getText()));
+                        empleadoRepositorio.guardar(empleado);
+                        refrescarTablaEmpleado();
+                    }
                 }
+                else {
+                    JOptionPane.showMessageDialog(this, "ID no válido", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Ingrese un valor numérico válido para el ID por favor", "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(this, "Error al obtener los datos", "Error al cargar datos", JOptionPane.ERROR_MESSAGE);
             }
 
         }
     }
 
     private void eliminarEmpleado() {
+        String empleadoIdStr = JOptionPane.showInputDialog(this, "Ingrese ID del empleado a actualizar por favor", "Actualiza empleado", JOptionPane.QUESTION_MESSAGE);
+        if(empleadoIdStr != null){
+            try{
+                int empleadoId = Integer.parseInt(empleadoIdStr);
+                int confirmarEliminacion = JOptionPane.showConfirmDialog(this, "Seguro desea eliminar empleado?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+            if(confirmarEliminacion == JOptionPane.YES_OPTION){
+                empleadoRepositorio.eliminar(empleadoId);
+                refrescarTablaEmpleado();
+            }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Ingrese un valor numérico válido para el ID por favor", "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (SQLException e){
+                throw new RuntimeException();
+            }
+        }
     }
 
 

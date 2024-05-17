@@ -86,7 +86,7 @@ public class EmpleadoRepositorio implements Repositorio<Empleado>{
         if(empleado.getId() > 0)
         {
 
-            sql = "update empleados set nombre=?,pimerApellido=?,segundoApellido=?,email=?,salario= where id=?";
+            sql = "update empleados set nombre=?,primerApellido=?,segundoApellido=?,email=?,salario=? where id=?";
 
         }
         else
