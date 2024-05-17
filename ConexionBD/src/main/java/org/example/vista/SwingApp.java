@@ -5,8 +5,10 @@ import org.example.repositorio.EmpleadoRepositorio;
 import org.example.repositorio.Repositorio;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.sql.SQLException;
+import java.util.List;
 
 public class SwingApp extends JFrame {
 
@@ -17,7 +19,7 @@ public class SwingApp extends JFrame {
     public SwingApp() {
 
         setTitle("Administrador de empleados");
-        setSize(600, 230);
+        setSize(1200, 460);
         //crear una tabla para empleados
         tablaEmpleado = new JTable();
         JScrollPane scrollPane = new JScrollPane(tablaEmpleado);
@@ -42,6 +44,7 @@ public class SwingApp extends JFrame {
         eliminarButton.setForeground(Color.white);
         empleadoRepositorio = new EmpleadoRepositorio(); //objeto creado para acceder a la base de datos.
         // agregar la acción de escuchar a los botones
+        refrescarTablaEmpleado();
         agregarButton.addActionListener(e -> {
             try {
                 agregarEmpleado();
@@ -49,8 +52,42 @@ public class SwingApp extends JFrame {
                 throw new RuntimeException(ex);
             }
         });
-
+actualizarButton.addActionListener(e -> actualizarEmpleado());
+eliminarButton.addActionListener(e -> eliminarEmpleado());
     }
+
+    private void actualizarEmpleado() {
+
+        String empleadoIdStr = JOptionPane.showInputDialog(this, "Ingrese ID del empleado a actualizar por favor", "Actualiza empleado", JOptionPane.QUESTION_MESSAGE);
+        if(empleadoIdStr != null){
+
+            try{
+                int empleadoId = Integer.parseInt(empleadoIdStr);
+                Empleado empleado = empleadoRepositorio.obtenerPorId(empleadoId);
+                if(empleado != null){
+                    JTextField nombre = new JTextField();
+                    JTextField primerApellido = new JTextField();
+                    JTextField segundoApellido = new JTextField();
+                    JTextField email = new JTextField();
+                    JTextField salario = new JTextField();
+                    Object[] campos = {
+                            "Nombre: ", nombre,
+                            "Primer Apellido: ", primerApellido,
+                            "Segundo Apellido: ", segundoApellido,
+                            "Email: ", email,
+                            "Salario: ", salario
+                    };
+                    int resultado = JOptionPane.showConfirmDialog(this, campos, "Agregar empleado", JOptionPane.OK_CANCEL_OPTION);
+
+                }
+            }
+
+        }
+    }
+
+    private void eliminarEmpleado() {
+    }
+
 
     private void agregarEmpleado() throws SQLException {
 
@@ -80,9 +117,40 @@ public class SwingApp extends JFrame {
 
             empleadoRepositorio.guardar(empleado);
             // Crear método refrescar/actualizar tablas
+            refrescarTablaEmpleado();
             JOptionPane.showMessageDialog(this, "Empleado agregado exitosamente.", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
+    private void refrescarTablaEmpleado(){
+
+        try {
+
+            List<Empleado> empleados = empleadoRepositorio.encontrarTodo();
+            DefaultTableModel model = new DefaultTableModel();
+            model.addColumn("id");
+            model.addColumn("nombre");
+            model.addColumn("primerApellido");
+            model.addColumn("segundoApellido");
+            model.addColumn("email");
+            model.addColumn("salario");
+                for (Empleado empleado: empleados){
+
+                    Object[] filaDatos = {
+                            empleado.getId(),
+                            empleado.getNombre(),
+                            empleado.getPrimerApellido(),
+                            empleado.getSegundoApellido(),
+                            empleado.getEmail(),
+                            empleado.getSalario()
+                    };
+                    model.addRow(filaDatos);
+                }
+            tablaEmpleado.setModel(model);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error al obtener datos, por favor verifique", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }
 
 }
