@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,6 +33,33 @@ public class FormServlet extends HttpServlet {
        }
        if (pais == null || pais.isEmpty() || pais.equals("") || pais.equals(" ")) {
            errores.put("pais", "Debe seleccionar un país de la lista");
+       }
+       if(errores.isEmpty()) {
+           try (PrintWriter out = resp.getWriter()){
+
+               out.println("<!DOCTYPE html>");
+               out.println("<html>");
+               out.println("<head>");
+               out.println("<meta charset=\"UTF-8\">");
+               out.println("<title>Registro</title>");
+               out.println("</head>");
+               out.println("<body>");
+               out.println("<h1>Registro</h1>");
+               out.println("<ul>");
+               out.println("<li>Usuario: " + username + "</li>");
+               out.println("<li>Contraseña: " + password + "</li>");
+               out.println("<li>Email: " + email + "</li>");
+               out.println("<li>País: " + pais + "</li>");
+               out.println("</ul>");
+               out.println("</body>");
+               out.println("</html>");
+               out.close();
+
+           }
+       }
+       else {
+           req.setAttribute("Errores", errores);
+           getServletContext().getRequestDispatcher("/index.jsp").forward(req, resp);
        }
     }
 }
