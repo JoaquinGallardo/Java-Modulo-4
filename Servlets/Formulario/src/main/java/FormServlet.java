@@ -46,6 +46,7 @@ public class FormServlet extends HttpServlet {
                out.println("<body>");
                out.println("<h1>Registro</h1>");
                out.println("<ul>");
+
                out.println("<li>Usuario: " + username + "</li>");
                out.println("<li>Contraseña: " + password + "</li>");
                out.println("<li>Email: " + email + "</li>");
