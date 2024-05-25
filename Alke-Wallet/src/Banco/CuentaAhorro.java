@@ -4,7 +4,7 @@ public class CuentaAhorro extends Cuenta{
     private int numRetiro;
 
     public CuentaAhorro() {
-        super();
+        super(Moneda.CLP);
         this.numRetiro = 5;
     }
 
