@@ -1,11 +1,11 @@
 package Banco;
 
-public class CuentaDolares extends Cuenta implements ConversorMoneda {
-private double maxDeposito;
+public class CuentaEuro extends Cuenta implements ConversorMoneda {
+    private double maxDeposito;
     private double depositoActual;
 
-    public CuentaDolares() {
-        super(Moneda.USD);
+    public CuentaEuro() {
+        super(Moneda.EUR);
         this.maxDeposito = 50000;
         this.depositoActual = 0;
     }
@@ -24,17 +24,17 @@ private double maxDeposito;
 
     @Override
     public boolean retiro(double retiro) {
-        if (balance < retiro*1.01){
+        if (balance < retiro*1.02){
             return false;
-    }
+        }
         else {
-            balance -= retiro*1.01;
+            balance -= retiro*1.02;
             return true;
         }
-}
+    }
 
     @Override
     public double convertir(double monto) {
-        return monto*960;
+        return monto*986;
     }
 }
