@@ -42,7 +42,7 @@ public class CuentaEuro extends Cuenta implements Conversor{
         return String.format("**%15s%-10s%10s%12.2f  **\n", "Numero Cta:",
                 Integer.toString(numero), "Saldo:", saldo)+
                 String.format("**%15s%-10s%10s%12.2f  **\n", "Moneda:",
-                        moneda, "Saldo:", this.convertir(saldo));
+                        moneda, "Saldo a CLP:", this.convertir(saldo));
     }
 
     @Override

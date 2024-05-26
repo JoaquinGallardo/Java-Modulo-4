@@ -7,13 +7,17 @@ public class Menu {
     static String bienvenida = """
 			*****************************************************
 			**          Bienvenido al Alke Banco               **
+			
+			**          Por favor ingrese una opción.          **
+			
 			*****************************************************""";
 
     static String menu = """
-			*****************************************************
+		
+			
 			** 1- Cuentas                                      **
-			** 1- Depositar                                    **
-			** 2- Retirar                                      **
+			** 2- Depositar                                    **
+			** 3- Retirar                                      **
 			** 0- Salir                                        **
 			*****************************************************""";
 
@@ -29,12 +33,14 @@ public class Menu {
         int comando = sc.nextInt();
 
         switch(comando) {
-//            case1:
-//
-//            ;
+            case 1:
+                System.out.println();
+                System.out.println(cuentas);
+                printMenu(cuentas);
+                break;
 
             case 2:
-                System.out.println("Ingrese cuenta origen");
+                System.out.println("Ingrese cuenta para depositar");
                 int origen = sc.nextInt();
                 System.out.println("Ingrese el monto");
                 double monto = sc.nextDouble();
@@ -42,11 +48,14 @@ public class Menu {
                 printMenu(cuentas);
                 break;
             case 3:
-                System.out.println("Has seleccionado retirar");
+                System.out.println("Ingrese cuenta para retirar");
+                 sc.nextInt();
+                System.out.println("Ingrese el monto");
+                  sc.nextDouble();
                 printMenu(cuentas);
                 break;
             case 0:
-                System.out.println("Has seleccionado salir");
+                System.out.println("Adiós");
         }
 
     }

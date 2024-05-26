@@ -19,12 +19,12 @@ public abstract class Cuenta {
     public abstract boolean seeRetirar(double retiro);
     @Override
     public String toString() {
-        //*****************************************************
+
         return String.format("**%15s%-10s%10s%12.2f  **\n", "Numero Cta:",
                 Integer.toString(numero), "Saldo:", saldo)+
                 String.format("**%15s%-10s%10s%12s  **\n", "Moneda:",
                         moneda, "", "");
-        //return "Cuenta [numero=" + numero + ", saldo=" + saldo + "]";
+
     }
     public double getSaldo() {
         return saldo;

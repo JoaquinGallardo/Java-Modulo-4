@@ -16,7 +16,7 @@ public class CuentaAhorro extends Cuenta{
     }
 
     /**
-     * @param double retiro
+     * @param retiro retiro
      * @return boolean
      */
     @Override
